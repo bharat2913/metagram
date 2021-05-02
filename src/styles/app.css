@@ -12243,6 +12243,7 @@ video {
 }
 
 .fill-red {
+  fill: #ed4956;
 }
 
 .stroke-current {
@@ -29647,6 +29648,7 @@ video {
   }
 
   .sm\:fill-red {
+    fill: #ed4956;
   }
 
   .sm\:stroke-current {
@@ -46929,6 +46931,7 @@ video {
   }
 
   .md\:fill-red {
+    fill: #ed4956;
   }
 
   .md\:stroke-current {
@@ -64211,6 +64214,7 @@ video {
   }
 
   .lg\:fill-red {
+    fill: #ed4956;
   }
 
   .lg\:stroke-current {
@@ -81493,6 +81497,7 @@ video {
   }
 
   .xl\:fill-red {
+    fill: #ed4956;
   }
 
   .xl\:stroke-current {
@@ -98775,6 +98780,7 @@ video {
   }
 
   .\32xl\:fill-red {
+    fill: #ed4956;
   }
 
   .\32xl\:stroke-current {

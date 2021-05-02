@@ -1,8 +1,23 @@
 /* eslint-disable prettier/prettier */
-export default function Timeliine() {
+/* eslint-disable no-nested-ternary */
+import Skeleton from 'react-loading-skeleton';
+import usePhotos from '../hooks/use-photos';
+import Post from './post';
+
+export default function Timeline() {
+  const { photos } = usePhotos();
+
   return (
     <div className='container col-span-2'>
-      <p>This is Timeline</p>
+      {!photos ? (
+        <>
+          <Skeleton count={4} width={470} height={500} className='mb-5' />
+        </>
+      ) : photos?.length > 0 ? (
+        photos.map((content) => <Post key={content.docId} content={content} />)
+      ) : (
+        <p className='text-center text-2xl'>Follow people to see photos</p>
+      )}
     </div>
   );
 }

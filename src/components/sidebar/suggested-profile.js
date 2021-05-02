@@ -27,12 +27,6 @@ export default function SuggestedProfile({
     await updateFollowedUserFollowers(ProfileDocId, userId, false);
   }
 
-  //   console.log('username', username);
-  //   console.log('ProfileId', ProfileId);
-  //   console.log('ProfileDocId', ProfileDocId);
-  //   console.log('userId', userId);
-  //   console.log('loggedInUserDocId', loggedInUserDocId);
-
   return !followed ? (
     <div className='flex flex-row items-center align-items justify-between'>
       <div className='flex items-center justify-between'>
@@ -57,8 +51,6 @@ export default function SuggestedProfile({
     </div>
   ) : null;
 }
-
-console.log();
 
 SuggestedProfile.propTypes = {
   ProfileDocId: PropTypes.string.isRequired,
