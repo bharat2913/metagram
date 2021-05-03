@@ -11,6 +11,19 @@ export async function doesUserNameExist(username) {
   return result.docs.map((user) => user.data().length > 0);
 }
 
+export async function getUserByUserName(username) {
+  const result = await firebase
+    .firestore()
+    .collection('users')
+    .where('username', '==', username)
+    .get();
+
+  return result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+}
+
 export async function getUserByUserId(userId) {
   const result = await firebase
     .firestore()
@@ -97,4 +110,63 @@ export async function getPhotos(userId, following) {
     })
   );
   return photosWithUserDetails;
+}
+
+export async function getUserPhotosByUsername(username) {
+  const [user] = await getUserByUserName(username);
+  const result = await firebase
+    .firestore()
+    .collection('photos')
+    .where('userId', '==', user.userId)
+    .get();
+
+  return result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+}
+
+export async function isUserFollowingProfile(
+  loggedInUserUsername,
+  profileUserId
+) {
+  const result = await firebase
+    .firestore()
+    .collection('users')
+    .where('username', '==', loggedInUserUsername)
+    .where('following', 'array-contains', profileUserId)
+    .get();
+
+  const [response = {}] = result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+
+  return response.userId;
+}
+
+export async function toggleFollow(
+  isFollowingProfile,
+  activeUserDocId,
+  profileDocId,
+  profileUserId,
+  followingUserId
+) {
+  // 1st currently LoggedIn user Document Id
+  // 2nd user that is requested to follow
+  // 3rd true/false (is currently LoggedIn user following this profile)
+  await updateLoggedInUserFollowing(
+    activeUserDocId,
+    profileUserId,
+    isFollowingProfile
+  );
+
+  // 1st user that is requested to follow Document Id
+  // 2nd currently LoggedIn user user Id
+  // 3rd true/false (is currently LoggedIn user following this profile)
+  await updateFollowedUserFollowers(
+    profileDocId,
+    followingUserId,
+    isFollowingProfile
+  );
 }
