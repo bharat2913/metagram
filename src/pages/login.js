@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-undef */
 /* eslint-disable react/self-closing-comp */
-import { isWithinInterval } from 'date-fns';
 import { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
