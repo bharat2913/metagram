@@ -1,10 +1,11 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
 import useUser from '../../hooks/use-user';
 import { isUserFollowingProfile, toggleFollow } from '../../services/firebase';
+import UserContext from '../../context/user';
 
 export default function Header({
   photosCount,
@@ -14,13 +15,14 @@ export default function Header({
     docId: profileDocId,
     userId: profileUserId,
     fullName,
-    following = [],
-    followers = [],
+    following,
+    followers,
     username: profileUsername,
   },
 }) {
-  const { user } = useUser();
-  const activeBtnFollow = user.username && user.username !== profileUsername;
+  const { user: loggedInUser } = useContext(UserContext);
+  const { user } = useUser(loggedInUser?.uid);
+  const activeBtnFollow = user?.username && user?.username !== profileUsername;
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
 
   const handleToggleFollow = async () => {
@@ -48,15 +50,15 @@ export default function Header({
       setIsFollowingProfile(isFollowing);
     };
 
-    if (user.username && profileUserId) {
+    if (user?.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
-  }, [user.username, profileUserId]);
+  }, [user?.username, profileUserId]);
 
   return (
     <div className='grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-md'>
-      <div className='container flex justify-center'>
-        {!user.username ? (
+      <div className='container flex justify-center items-center'>
+        {!profileUsername ? (
           <>
             <Skeleton count={1} width={150} height={150} className='mb-5' />
           </>
@@ -88,7 +90,7 @@ export default function Header({
           )}
         </div>
         <div className='container flex mt-4'>
-          {followers === undefined || following === undefined ? (
+          {!followers || !following ? (
             <Skeleton count={1} width={677} height={24} />
           ) : (
             <>

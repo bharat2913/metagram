@@ -3,6 +3,9 @@ module.exports = {
   future: {
     removeDeprecatedGapUtilities: true,
   },
+  purge: {
+    content: ['./src/**/*.js', './src/**/**/*.js'],
+  },
 
   theme: {
     fill: (theme) => ({
@@ -31,3 +34,4 @@ module.exports = {
     display: ['group-hover'],
   },
 };
+//  "build": "react-scripts build",

@@ -35,14 +35,18 @@ export default function SignUp() {
 
         // firebase user Collection
 
-        await firebase.firestore().collection('users').add({
-          userId: createdUserResult.user.uid,
-          username: username.toLowerCase(),
-          fullName,
-          emailAddress: emailAddress.toLowerCase(),
-          following: [],
-          dateCreated: Date.now(),
-        });
+        await firebase
+          .firestore()
+          .collection('users')
+          .add({
+            userId: createdUserResult.user.uid,
+            username: username.toLowerCase(),
+            fullName,
+            emailAddress: emailAddress.toLowerCase(),
+            following: ['2'],
+            followers: [],
+            dateCreated: Date.now(),
+          });
 
         history.push(ROUTES.DASHBOARD);
       } catch (error) {
@@ -52,6 +56,7 @@ export default function SignUp() {
         setError(error.message);
       }
     } else {
+      setUsername('');
       setError('Username is already taken, try another. ');
     }
   };
@@ -81,9 +86,9 @@ export default function SignUp() {
 
           <form onSubmit={handleSignUp} method='POST'>
             <input
-              aria-label='Enter your fullname'
+              aria-label='Enter your full name'
               type='text'
-              placeholder='Full Name'
+              placeholder='Full name'
               className='text-sm text-grey-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2'
               onChange={({ target }) => setFullname(target.value)}
               value={fullName || ''}

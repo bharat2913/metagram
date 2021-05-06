@@ -10,7 +10,7 @@ export default function NotFound() {
   return (
     <div className='border-gray-background'>
       <Header />
-      <div className='mx-auto max-w-screen-lg'>
+      <div className='mx-auto max-w-screen-md'>
         <p className='text-center text-2xl'>Not Found</p>
       </div>
     </div>
