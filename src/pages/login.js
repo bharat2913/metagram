@@ -28,6 +28,18 @@ export default function Login() {
     }
   };
 
+  const handleGuestLogin = async (event) => {
+    event.preventDefault();
+    try {
+      await firebase
+        .auth()
+        .signInWithEmailAndPassword('test@gmail.com', 'test123');
+      history.push(ROUTES.DASHBOARD);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   useEffect(() => {
     document.title = 'Login - Instagram';
   });
@@ -86,6 +98,17 @@ export default function Login() {
             <Link to={ROUTES.SIGN_UP} className='font-bold text-blue-medium'>
               Sign Up
             </Link>
+          </p>
+          <p className='text-sm'>or</p>
+          <p className='text-sm'>
+            Login as{' '}
+            <button
+              type='submit'
+              onClick={handleGuestLogin}
+              className='font-bold text-blue-medium'
+            >
+              Guest
+            </button>
           </p>
         </div>
       </div>
