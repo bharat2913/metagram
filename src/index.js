@@ -8,7 +8,8 @@ import './styles/app.css';
 
 ReactDOM.render(
   <FirebaseContext.Provider value={{ firebase, FieldValue, analytics }}>
-    <App />
+    <App />,
+    analytics.logEvent('notification_received')
   </FirebaseContext.Provider>,
   document.getElementById('root')
 );
