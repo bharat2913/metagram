@@ -6,9 +6,13 @@ import Sidebar from '../components/sidebar';
 import Timeline from '../components/timeline';
 import LoggedInUserContext from '../context/logged-in-user';
 import useUser from '../hooks/use-user';
+import {analytics} from '../lib/firebase'
 
 export default function Dashboard({ user: loggedInUser }) {
   const { user } = useUser(loggedInUser.uid);
+    useEffect(() => {
+    analytics.logEvent('dashboard_visited')
+  })
   useEffect(() => {
     document.title = 'Metagram';
   }, []);

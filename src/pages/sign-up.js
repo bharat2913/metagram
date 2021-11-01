@@ -6,6 +6,7 @@ import { Link, useHistory } from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
 import * as ROUTES from '../constants/routes';
 import { doesUserNameExist } from '../services/firebase';
+import {analytics} from '../lib/firebase'
 
 export default function SignUp() {
   const history = useHistory();
@@ -18,6 +19,9 @@ export default function SignUp() {
 
   const [error, setError] = useState('');
   const isInvalid = password === '' || emailAddress === '';
+    useEffect(() => {
+    analytics.logEvent('SignUp_page_visited')
+  })
 
   const handleSignUp = async (event) => {
     event.preventDefault();

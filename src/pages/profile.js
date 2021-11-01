@@ -5,6 +5,7 @@ import { getUserByUserName } from '../services/firebase';
 import * as ROUTES from '../constants/routes';
 import Header from '../components/header';
 import UserProfile from '../components/profile';
+import {analytics} from '../lib/firebase'
 
 export default function Profile() {
   const { username } = useParams();
@@ -23,6 +24,9 @@ export default function Profile() {
 
     checkUserExists();
   }, [username, history]);
+    useEffect(() => {
+    analytics.logEvent('profile_page_visited')
+  })
   return user?.username ? (
     <div className='bg-gray-background'>
       <Header />

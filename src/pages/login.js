@@ -5,6 +5,7 @@ import { useState, useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import FirebaseContext from '../context/firebase';
 import * as ROUTES from '../constants/routes';
+import {analytics} from '../lib/firebase'
 
 export default function Login() {
   const history = useHistory();
@@ -15,6 +16,10 @@ export default function Login() {
 
   const [error, setError] = useState('');
   const isInvalid = password === '' || emailAddress === '';
+
+  useEffect(() => {
+    analytics.logEvent('login_page_visited')
+  })
 
   const handleLogin = async (event) => {
     event.preventDefault();

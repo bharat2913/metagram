@@ -1,8 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { useEffect } from 'react';
 import Header from '../components/header';
+import {analytics} from '../lib/firebase'
 
 export default function NotFound() {
+    useEffect(() => {
+    analytics.logEvent('Not_found_visited')
+  })
   useEffect(() => {
     document.title = 'Not Found - Instagram';
   }, []);
